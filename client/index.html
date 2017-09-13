@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+	<link rel="stylesheet" href="/css/font-awesome.min.css">
     <style>
         body {
             padding-top: 60px;
@@ -99,13 +100,13 @@
         </div>
         <div class="row">
 		<div class="btn-group" role="group" aria-label="...">
-		  <button type="button" onclick="login()" class="btn btn-success">Run</button>
-		  <button type="button" class="btn btn-danger">Stop</button>
-		  <button type="button" class="btn btn-warning">Reset</button>
+		  <button type="button" onclick="login()" class="btn btn-success"> <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Run</button>
+		  <button type="button" class="btn btn-danger"> <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop</button>
+		  <button type="button" class="btn btn-warning"> <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Reset</button>
 		</div>
 		<div class="btn-group" role="group" aria-label="...">
-		  <button type="button" class="btn btn-default">Debug</button>
-		  <button type="button" class="btn btn-default">Step</button>
+		  <button type="button" class="btn btn-default"> <i class="fa fa-bug" aria-hidden="true"></i> Debug</button>
+		  <button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> Step</button>
 		</div>
 
             <!-- Login -->
