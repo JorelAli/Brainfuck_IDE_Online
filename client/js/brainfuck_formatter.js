@@ -2,9 +2,9 @@ function formatString(inputStr) {
 	//Variable declaration
 	var indentationLevel = 0;
 	var output = "";
-	var code = inputStr.prototype.replace(/[^\.\[\]\+\-\,\>\<]/, "");
-	var comments = inputStr.prototype.replace(/[\.\[\]\+\-\,\>\<]/, "");
-	comments = comments.prototype.trim();
+	var code = replaceAll(inputStr, /[^\.\[\]\+\-\,\>\<]/, "");
+	var comments = replaceAll(inputStr, /[\.\[\]\+\-\,\>\<]/, "");
+	comments = comments.trim();
 
 	//Loop through characters to format stuff
 	for(var charPointer = 0; charPointer < code.length; charPointer++){
@@ -26,40 +26,40 @@ function formatString(inputStr) {
 				switch(prev) {
 					case ">":
 					case "<":
-						output.concat(c);
+						output = output + c;
 						break;
 					case "#":
-						output.concat(indent(indentationLevel)).concat(c);
+						output = output + indent(indentationLevel) + c;
 						break;
 					default:
-						output.concat("\n").concat(indent(indentationLevel)).concat(c);
+						output = output + "\n" + indent(indentationLevel) + c;
 						break;
 				}
 				break;
 			case "+":
 			case "-":
-				if (prev == "+" || prev == "-") {
-					output.concat(" ").concat(c);
+				if (prev == ">" || prev == "<") {
+					output = output + " " + c;
 				} else {
-					output.concat(c);
+					output = output + c;
 				}
 				break;
 			case ".":
 			case ",":
-				output.concat(c);
+				output = output + c;
 				break;
 			case "[":
-				output.concat("\n").concat(indent(indentationLevel)).concat(c);
+				output = output + "\n" + indent(indentationLevel) + c;
 				indentationLevel++;
 				break;
 			case "]":
-				output.concat("\n")
+				output = output + "\n"
 				indentationLevel--;
-				output.concat(indent(indentationLevel)).concat(c);
+				output = output + indent(indentationLevel) + c;
 				break;
 		}
-		output = comments.concat("\n").concat(output);
 	}
+	output = comments + "\n" + output;
 	return output;
 }
 
@@ -68,4 +68,8 @@ function indent(indentationLevel) {
 	for (var i = 0; i < indentationLevel; i++)
 		str = str + "\t";
 	return str;
+}
+
+function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace);
 }

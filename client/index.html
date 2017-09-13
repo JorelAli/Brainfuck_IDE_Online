@@ -85,7 +85,8 @@
 		}
 		
 		function format() {
-			editor.setValue(formatString(editor.getValue()));
+			var editorVal = editor.getValue();
+			editor.setValue(formatString(editorVal));
 		}
 	</script>
 </head>
@@ -201,6 +202,7 @@
 				var editor = ace.edit("editor");
 				editor.setTheme("ace/theme/chrome");
 				editor.getSession().setMode("ace/mode/text");
+                editor.$blockScrolling = Infinity;
 			</script>
 
 
