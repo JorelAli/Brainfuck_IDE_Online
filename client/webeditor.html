@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>ACE in Action</title>
+<style type="text/css" media="screen">
+    body {
+        overflow: hidden;
+    }
+    #editor {
+
+    }
+</style>
+</head>
+<body>
+
+<div id="editor" style="height: 500px; width: 500px">some text</div>
+    
+<script src="/ace-builds-1.2.8/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	//TODO: Create a highlighter for Brainfuck: https://ace.c9.io/#higlighter=&nav=higlighter
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/text");
+</script>
+</body>
+</html>
