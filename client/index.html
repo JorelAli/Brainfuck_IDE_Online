@@ -2,13 +2,14 @@
 <html lang="en" ng-app>
 
 <head>
-    <script src="/js/jquery.min.js"></script>
-
     <title>Brainfuck IDE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
 	<link rel="stylesheet" href="/css/font-awesome.min.css">
+	
+	<script src="/js/jquery.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
     <style>
         body {
             padding-top: 60px;
@@ -19,74 +20,24 @@
 	</style>
     <script>
 	$(document).ready()
-        //document.getElementById("theChatBox").scrollTop = document.getElementById("theChatBox").scrollHeight;
-
-        function ChatController($scope) {
-            var socket = io.connect();
-
-            //$scope.messages = []
-            //$scope.roster = [];
-            //$scope.name = '';
-            //$scope.text = '';
-            $scope.uname = '';
-            $scope.pword = '';
-            $scope.serverip = '';
-            $scope.serverport = '';
-            $scope.msg = '';
-            $scope.chatbox = '';
-
-            // socket.on('connect', function () {
-            //   $scope.setName();
-            // });
-
-            // socket.on('message', function (msg) {
-            //   $scope.messages.push(msg);
-            //   $scope.$apply();
-            // });
-
-            // socket.on('roster', function (names) {
-            //   $scope.roster = names;
-            //   $scope.$apply();
-            // });
-
-            socket.on('chatbox', function(msg) {
-                if (!$scope.chatbox) {
-                    $scope.$apply(function() {
-                        $scope.chatbox = msg + "\n";
-                    });
-                } else {
-                    $scope.$apply(function() {
-                        $scope.chatbox = $scope.chatbox + msg + "\n";
-                    });
-                }
-            });
-
-            $scope.chat = function chat() {
-                socket.emit('chat', $scope.msg);
-                $scope.msg = '';
-            };
-
-            $scope.login = function login() {
-                //TODO: encrypt password
-                socket.emit('login', [$scope.uname, $scope.pword, $scope.serverip, $scope.serverport]);
-            };
-
-            $scope.leave = function leave() {
-                socket.emit('leave');
-            };
-
-        }
+    var socket = io.connect();	
+     
     </script>
 	<script>
+
+        //TODO: add tabs (say for settings): https://www.w3schools.com/howto/howto_js_tabs.asp
 		function login() {
-			var socket = io.connect();	
-			console.log("hi")
 			socket.emit('leave');
 		}
 		
 		function format() {
 			var editorVal = editor.getValue();
 			editor.setValue(formatString(editorVal));
+		}
+
+        function unformat() {
+			var editorVal = editor.getValue();
+			editor.setValue(unformatString(editorVal));
 		}
 	</script>
 </head>
@@ -105,7 +56,7 @@
         </div>
         <div class="row">
 		<div class="btn-group" role="group" aria-label="...">
-		  <button type="button" onclick="login()" class="btn btn-success"> <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Run</button>
+		  <button type="button" onclick="socket.emit('leave')" class="btn btn-success"> <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Run</button>
 		  <button type="button" class="btn btn-danger"> <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop</button>
 		  <button type="button" class="btn btn-warning"> <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Reset</button>
 		</div>
@@ -115,7 +66,7 @@
 		</div>
 		<div class="btn-group" role="group" aria-label="...">
 		  <button type="button" onclick="format()" class="btn btn-primary"> <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span> Format</button>
-		  <button type="button" class="btn btn-info"> <span class="glyphicon glyphicon-align-center" aria-hidden="true"></span> Unformat</button>
+		  <button type="button" onclick="unformat()" class="btn btn-info"> <span class="glyphicon glyphicon-align-center" aria-hidden="true"></span> Unformat</button>
 		</div>
 
             <!-- Login -->
@@ -223,7 +174,6 @@
         </div>
     </div>
     </div>
-    <script src="/socket.io/socket.io.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/angular.min.js"></script>
 	

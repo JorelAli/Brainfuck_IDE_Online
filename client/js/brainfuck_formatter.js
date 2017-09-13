@@ -1,3 +1,10 @@
+function unformatString(inputStr) {
+	var code = replaceAll(inputStr, /[^\.\[\]\+\-\,\>\<]/, "");
+	var comments = replaceAll(inputStr, /[\.\[\]\+\-\,\>\<]/, "");
+	comments = comments.trim();
+	return comments + "\n" + code;
+}
+
 function formatString(inputStr) {
 	//Variable declaration
 	var indentationLevel = 0;
