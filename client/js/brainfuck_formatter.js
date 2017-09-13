@@ -26,25 +26,41 @@ function formatString(inputStr) {
 				switch(prev) {
 					case ">":
 					case "<":
-						output = output.concat(c);
+						output.concat(c);
 						break;
 					case "#":
-						output = output.concat(indent(indentationLevel)).concat(c);
+						output.concat(indent(indentationLevel)).concat(c);
 						break;
 					default:
-						output = output.concat("\n").concat(indent(indentationLevel)).concat(c);
+						output.concat("\n").concat(indent(indentationLevel)).concat(c);
 						break;
 				}
 				break;
 			case "+":
 			case "-":
-
+				if (prev == "+" || prev == "-") {
+					output.concat(" ").concat(c);
+				} else {
+					output.concat(c);
+				}
+				break;
+			case ".":
+			case ",":
+				output.concat(c);
+				break;
+			case "[":
+				output.concat("\n").concat(indent(indentationLevel)).concat(c);
+				indentationLevel++;
+				break;
+			case "]":
+				output.concat("\n")
+				indentationLevel--;
+				output.concat(indent(indentationLevel)).concat(c);
+				break;
 		}
-
-		//format goes here :D
+		output = comments.concat("\n").concat(output);
 	}
-
-	//set text output
+	return output;
 }
 
 function indent(indentationLevel) {
